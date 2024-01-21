@@ -1,9 +1,11 @@
 import { makeCanvas } from "./utils/canvas_util.js";
 
-const [width, height] = [1000, 1000];
+const [width, height] = [600, 690]; // example image dim x 3
 const [canvas, ctx] = makeCanvas(width, height);
 
-ctx.fillStyle = "red";
+ctx.strokeStyle = "rgb(227, 174, 30)";
+ctx.fillStyle = "white";
+
 ctx.fillRect(0, 0, 1000, 1000);
 
 // download("test", canvas);
