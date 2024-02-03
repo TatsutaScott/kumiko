@@ -6,8 +6,8 @@ const [canvas, ctx] = makeCanvas(width, height);
 ctx.strokeStyle = "rgb(227, 174, 30)";
 ctx.fillStyle = "white";
 
-ctx.fillRect(0, 0, 1000, 1000);
-
+ctx.fillRect(0, 0, width, height);
+ctx.strokeRect(0, 0, width, height)
 // download("test", canvas);
 
 function download(name, canvas) {
