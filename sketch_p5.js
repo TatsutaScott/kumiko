@@ -5,10 +5,11 @@ function setup() {
 
 function draw() {
   background(255);
-  // screenShot();
+  Pattern.pattern(kikyouasanoha, 0, 0, width, height, 2, 0);
+  // screenShot("kikyouasanoha");
 }
 
-function screenShot() {
+function screenShot(tag) {
   const now = Date.now();
-  saveCanvas(`${now}_mikadotsunagi.png`);
+  saveCanvas(`${now}_${tag}.png`);
 }
