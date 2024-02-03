@@ -5,9 +5,10 @@ function setup() {
 
 function draw() {
   background(255);
+  // screenShot();
 }
 
 function screenShot() {
   const now = Date.now();
-  saveCanvas(`${now}_kumiko.png`);
+  saveCanvas(`${now}_mikadotsunagi.png`);
 }

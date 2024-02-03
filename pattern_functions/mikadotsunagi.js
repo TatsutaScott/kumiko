@@ -1,16 +1,24 @@
-class Asanoha {
-  /**Draws the most basic element of the asanoha pattern
+class Mikadotsunagi {
+  /**Draws the most basic element of the mikadotsunagi pattern
    * @param {Number} x - x coord of the center of the triangle
    * @param {Number} y - y coord of the center of the triangle
    * @param {Number} rad - 'radius' of the triangle. distance from the center to a point
    * @param {Number} rot - rotation of the triangle in radians
    * @void
    */
-  static triangle(x, y, rad, rot) {
-    const points = [];
+  static triangle(x, y, rad, rot, lo = 1 / 3, hi = 2 / 3) {
+    const corners = [];
+    const thirds = [];
+    const two_thirds = [];
 
     for (let i = 0; i < 3; i++) {
-      points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
+      corners.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const next = (i + 1) % 3;
+      thirds.push(p5.Vector.lerp(corners[i], corners[next], lo));
+      two_thirds.push(p5.Vector.lerp(corners[i], corners[next], hi));
     }
 
     push();
@@ -19,14 +27,14 @@ class Asanoha {
 
     for (let i = 0; i < 3; i++) {
       const next = (i + 1) % 3;
-      line(points[i].x, points[i].y, 0, 0);
-      line(points[i].x, points[i].y, points[next].x, points[next].y);
+      line(corners[i].x, corners[i].y, corners[next].x, corners[next].y);
+      line(thirds[i].x, thirds[i].y, two_thirds[next].x, two_thirds[next].y);
     }
 
     pop();
   }
 
-  /**Draws a cluster of triangles in a hexagon for a asanoha pattern
+  /**Draws a cluster of triangles in a hexagon for a mikadotsunagi pattern
    * @param {Number} x - x coord of the center of the hexagon
    * @param {Number} y - y coord of the center of the hexagon
    * @param {Number} rad - 'radius' of the hexagon. distance from the center to the edge of one of the triangles
@@ -43,13 +51,20 @@ class Asanoha {
     for (let i = 0; i < 6; i++) {
       const theta = i * (TAU / 6);
       const pos = p5.Vector.fromAngle(theta).setMag(triangle_radius);
-      Asanoha.triangle(pos.x, pos.y, triangle_radius, theta + PI);
+      Mikadotsunagi.triangle(
+        pos.x,
+        pos.y,
+        triangle_radius,
+        theta + PI,
+        1 / 3,
+        2 / 3
+      );
     }
 
     pop();
   }
 
-  /**Draws the asanoha pattern within a defined space
+  /**Draws the mikadotsunagi pattern within a defined space
    * @param {Number} x - x coord of top left corner of pattern space
    * @param {Number} y - y coord of top left corner of pattern space
    * @param {Number} w - width of pattern space
@@ -70,7 +85,7 @@ class Asanoha {
       while (row_num * unit_height <= h) {
         const x_offset = row_num % 2 == 0 ? 0 : w / (cols * 2);
 
-        Asanoha.hexagon(
+        Mikadotsunagi.hexagon(
           i * unit_width + x_offset,
           row_num * unit_height,
           unit_width / 2,
@@ -85,4 +100,4 @@ class Asanoha {
   }
 }
 
-export default Asanoha;
+export default Mikadotsunagi;
