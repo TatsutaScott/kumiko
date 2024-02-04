@@ -133,3 +133,38 @@ function kikyouasanoha(x, y, rad, rot, inner_size = 0.25) {
 
   pop();
 }
+
+function shippouasanoha(x, y, rad, rot, curve = 0.5) {
+  const points = [];
+  const mids = [];
+  const anchors = [];
+  const center = createVector(0, 0);
+
+  push();
+  translate(x, y);
+  rotate(rot);
+
+  for (let i = 0; i < 3; i++) {
+    points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
+  }
+
+  for (let i = 0; i < 3; i++) {
+    mids.push(p5.Vector.lerp(points[i], points[(i + 1) % 3], 0.5));
+    anchors.push(p5.Vector.lerp(mids[i], center, curve));
+  }
+
+  for (let i = 0; i < 3; i++) {
+    const next = (i + 1) % 3;
+    line(points[i].x, points[i].y, points[next].x, points[next].y);
+
+    noFill();
+    beginShape();
+    curveVertex(points[i].x, points[i].y);
+    curveVertex(points[i].x, points[i].y);
+    curveVertex(anchors[i].x, anchors[i].y);
+    curveVertex(points[next].x, points[next].y);
+    curveVertex(points[next].x, points[next].y);
+    endShape();
+  }
+  pop();
+}
