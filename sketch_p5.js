@@ -5,13 +5,22 @@ function setup() {
 
 function draw() {
   background(255);
-  // shippouasanoha(width / 2, height / 2, 50, 0, 0.5);
-  // Pattern.hexagon(shippouasanoha, width / 2, height / 2, 50, 0);
-  Pattern.pattern(shippouasanoha, 0, 0, width, height, 2, 0);
-  // screenShot("shippouasanoha");
+  // Pattern.hexagon(yaeasa, width / 2, height / 2, 50, 0);
+  // Pattern.pattern(yaeasa, 0, 0, width, height, 2, 0);
+  // screenShot("tsunoasanoha");
 }
 
 function screenShot(tag) {
   const now = Date.now();
   saveCanvas(`${now}_${tag}.png`);
 }
+
+function helper_point(vec, clr) {
+  push();
+  noStroke();
+  fill(clr);
+  circle(vec.x, vec.y, 5);
+  pop();
+}
+
+function tsunoasanoha(x, y) {}
