@@ -1,14 +1,24 @@
 function setup() {
-  createCanvas(600, 690);
+  createCanvas(600, 600);
   noLoop();
 }
 
 function draw() {
-  background(255);
+  background(240);
   // Pattern.hexagon(tsunoasanoha, width / 2, height / 2, 50, 0);
-  Pattern.pattern(tsunoasanoha, 0, 0, width, height, 2, 0);
-  // tsunoasanoha(width / 2, height / 2, 50, 0, 0.5);
-  // screenShot("tsunoasanoha");
+  strokeWeight(1.5);
+
+  Pattern.pattern(
+    mikadotsunagi,
+    width / 5,
+    height * (2 / 7),
+    width / 2,
+    height / 2,
+    2,
+    0
+  );
+
+  screenShot("mikadotsunagi_swatch");
 }
 
 function screenShot(tag) {

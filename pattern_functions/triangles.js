@@ -69,7 +69,7 @@ function asanoha(x, y, rad, rot) {
  * @param {Number} rot - rotation of the triangle in radians
  * @void
  */
-function yaeurabana_triangle(x, y, rad, rot) {
+function yaeurabana(x, y, rad, rot) {
   const corners = [];
   const midpoints = [];
   const hex_corners = [];
