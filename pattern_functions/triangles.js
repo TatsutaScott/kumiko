@@ -222,6 +222,46 @@ function yaeasa(x, y, rad, rot, inner_ratio = 0.5) {
   pop();
 }
 
+/**Draws the most basic element of the tsunoasanoha pattern
+ * @param {Number} x - x coord of the center of the triangle
+ * @param {Number} y - y coord of the center of the triangle
+ * @param {Number} rad - 'radius' of the triangle. distance from the center to a point
+ * @param {Number} rot - rotation of the triangle in radians
+ * @param {Number} inner_ratio - spacing of the intersection points (0, 1) from outside to center
+ */
+function tsunoasanoha(x, y, rad, rot, inner_ratio = 0.5) {
+  const center = createVector(0, 0);
+
+  const points = [];
+  const midpoints = [];
+  const intersections = [];
+
+  push();
+  translate(x, y);
+  rotate(rot);
+
+  for (let i = 0; i < 3; i++) {
+    points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
+  }
+  for (let i = 0; i < 3; i++) {
+    midpoints.push(p5.Vector.lerp(points[i], points[next(i, 3)], 0.5));
+    intersections.push(p5.Vector.lerp(midpoints[i], center, inner_ratio));
+  }
+
+  for (let i = 0; i < 3; i++) {
+    line(points[i].x, points[i].y, points[next(i, 3)].x, points[next(i, 3)].y);
+    line(
+      intersections[i].x,
+      intersections[i].y,
+      points[prev(i, 3)].x,
+      points[prev(i, 3)].y
+    );
+  }
+
+  pop();
+}
+
+//----------------------HELPER FUNCTIONS------------------------------------------
 /**finds the next index value and wraps around at maximum value
  * @param {Number} curr - current index value
  * @param {Number} max - the maximum value

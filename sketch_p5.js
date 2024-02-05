@@ -5,8 +5,9 @@ function setup() {
 
 function draw() {
   background(255);
-  // Pattern.hexagon(yaeasa, width / 2, height / 2, 50, 0);
-  // Pattern.pattern(yaeasa, 0, 0, width, height, 2, 0);
+  // Pattern.hexagon(tsunoasanoha, width / 2, height / 2, 50, 0);
+  Pattern.pattern(tsunoasanoha, 0, 0, width, height, 2, 0);
+  // tsunoasanoha(width / 2, height / 2, 50, 0, 0.5);
   // screenShot("tsunoasanoha");
 }
 
@@ -22,5 +23,3 @@ function helper_point(vec, clr) {
   circle(vec.x, vec.y, 5);
   pop();
 }
-
-function tsunoasanoha(x, y) {}
