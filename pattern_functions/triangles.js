@@ -324,6 +324,65 @@ function bentenkikkou(x, y, rad, rot, inner = 0.7, cross = 0.125) {
   pop();
 }
 
+/**Draws the most basic element of the sakura pattern
+ * @param {Number} x - x coord of the center of the triangle
+ * @param {Number} y - y coord of the center of the triangle
+ * @param {Number} rad - 'radius' of the triangle. distance from the center to a point
+ * @param {Number} rot - rotation of the triangle in radians
+ * @param {number} [cross=0.125] - offsets for each cross bar
+ * @void
+ */
+function sakura(x, y, rad, rot, cross = 0.125) {
+  const points = [];
+  const inner_points = [];
+  const cross_points = [];
+
+  for (let i = 0; i < 3; i++) {
+    points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
+    inner_points.push(
+      p5.Vector.lerp(points[i], createVector(0, 0), cross * 2.5)
+    );
+  }
+
+  for (let i = 0; i < 3; i++) {
+    const X = [];
+    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], cross));
+    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], cross * 2));
+    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], 1 - cross * 2));
+    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], 1 - cross));
+    cross_points.push(X);
+  }
+
+  push();
+  translate(x, y);
+  rotate(rot);
+  fill(240);
+
+  beginShape();
+  for (let p of points) {
+    vertex(p.x, p.y);
+  }
+  endShape(CLOSE);
+
+  for (let i = 0; i < 3; i++) {
+    line(
+      cross_points[i][0].x,
+      cross_points[i][0].y,
+      cross_points[prev(i, 3)][3].x,
+      cross_points[prev(i, 3)][3].y
+    );
+    line(
+      cross_points[i][1].x,
+      cross_points[i][1].y,
+      cross_points[prev(i, 3)][2].x,
+      cross_points[prev(i, 3)][2].y
+    );
+    line(inner_points[i].x, inner_points[i].y, 0, 0);
+  }
+
+  pop();
+}
+
 //----------------------HELPER FUNCTIONS------------------------------------------
 /**finds the next index value and wraps around at maximum value
  * @param {Number} curr - current index value

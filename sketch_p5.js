@@ -9,7 +9,7 @@ function draw() {
   strokeWeight(1.5);
 
   Pattern.pattern(
-    bentenkikkou,
+    sakura,
     width / 5,
     height * (2 / 7),
     width / 2,
@@ -17,8 +17,7 @@ function draw() {
     2,
     0
   );
-  // bentenkikkou(width / 2, height / 2, 50, 0);
-  // screenShot("bentenkikkou_swatch");
+  // sakura(width / 2, height / 2, 50, 0);
 }
 
 function screenShot(tag) {
@@ -41,15 +40,18 @@ function helper_point(vec, clr) {
  * @param {Number} rot - rotation of the triangle in radians
  * @void
  */
-function bentenkikkou(x, y, rad, rot, inner = 0.7, cross = 0.125) {
+function sakura(x, y, rad, rot, cross = 0.125) {
   const points = [];
   const inner_points = [];
   const cross_points = [];
 
   for (let i = 0; i < 3; i++) {
     points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
-    inner_points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad * inner));
+    inner_points.push(
+      p5.Vector.lerp(points[i], createVector(0, 0), cross * 2.5)
+    );
   }
+
   for (let i = 0; i < 3; i++) {
     const X = [];
     X.push(p5.Vector.lerp(points[i], points[next(i, 3)], cross));
@@ -84,13 +86,8 @@ function bentenkikkou(x, y, rad, rot, inner = 0.7, cross = 0.125) {
       cross_points[prev(i, 3)][2].x,
       cross_points[prev(i, 3)][2].y
     );
+    line(inner_points[i].x, inner_points[i].y, 0, 0);
   }
 
-  beginShape();
-  for (let p of inner_points) {
-    // helper_point(p, "green");
-    vertex(p.x, p.y);
-  }
-  endShape(CLOSE);
   pop();
 }
