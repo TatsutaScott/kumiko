@@ -9,7 +9,7 @@ function draw() {
   strokeWeight(1.5);
 
   Pattern.pattern(
-    kawariasanoha,
+    nijuasanoha,
     width / 5,
     height * (2 / 7),
     width / 2,
@@ -17,8 +17,8 @@ function draw() {
     2,
     0
   );
-  // kawariasanoha(width / 2, height / 2, 50, 0);
-  // screenShot("kawariasanoha_swatch");
+  // nijuasanoha(width / 2, height / 2, 50, 0);
+  // screenShot("nijuasanoha_swatch");
 }
 
 function screenShot(tag) {
@@ -34,14 +34,14 @@ function helper_point(vec, clr) {
   pop();
 }
 
-/**Draws the most basic element of the kawariasanoha pattern
+/**Draws the most basic element of the nijuasanoha pattern
  * @param {Number} x - x coord of the center of the triangle
  * @param {Number} y - y coord of the center of the triangle
  * @param {Number} rad - 'radius' of the triangle. distance from the center to a point
  * @param {Number} rot - rotation of the triangle in radians
  * @param {Number} inner_ratio - spacing of the intersection points (0, 1) from outside to center
  */
-function kawariasanoha(x, y, rad, rot, inner_ratio = 0.5) {
+function nijuasanoha(x, y, rad, rot, inner_ratio = 0.5) {
   const center = createVector(0, 0);
   const points = [];
   const midpoints = [];
@@ -69,12 +69,7 @@ function kawariasanoha(x, y, rad, rot, inner_ratio = 0.5) {
       intersections[i].x,
       intersections[i].y
     );
-    line(
-      intersections[i].x,
-      intersections[i].y,
-      intersections[next(i, 3)].x,
-      intersections[next(i, 3)].y
-    );
+    line(intersections[i].x, intersections[i].y, 0, 0);
   }
 
   pop();
