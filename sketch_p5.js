@@ -9,7 +9,7 @@ function draw() {
   strokeWeight(1.5);
 
   Pattern.pattern(
-    sakura,
+    kawariasanoha,
     width / 5,
     height * (2 / 7),
     width / 2,
@@ -17,7 +17,8 @@ function draw() {
     2,
     0
   );
-  // sakura(width / 2, height / 2, 50, 0);
+  // kawariasanoha(width / 2, height / 2, 50, 0);
+  // screenShot("kawariasanoha_swatch");
 }
 
 function screenShot(tag) {
@@ -33,60 +34,47 @@ function helper_point(vec, clr) {
   pop();
 }
 
-/**Draws the most basic element of the asanoha pattern
+/**Draws the most basic element of the kawariasanoha pattern
  * @param {Number} x - x coord of the center of the triangle
  * @param {Number} y - y coord of the center of the triangle
  * @param {Number} rad - 'radius' of the triangle. distance from the center to a point
  * @param {Number} rot - rotation of the triangle in radians
- * @void
+ * @param {Number} inner_ratio - spacing of the intersection points (0, 1) from outside to center
  */
-function sakura(x, y, rad, rot, cross = 0.125) {
+function kawariasanoha(x, y, rad, rot, inner_ratio = 0.5) {
+  const center = createVector(0, 0);
   const points = [];
-  const inner_points = [];
-  const cross_points = [];
-
-  for (let i = 0; i < 3; i++) {
-    points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
-    inner_points.push(
-      p5.Vector.lerp(points[i], createVector(0, 0), cross * 2.5)
-    );
-  }
-
-  for (let i = 0; i < 3; i++) {
-    const X = [];
-    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], cross));
-    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], cross * 2));
-    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], 1 - cross * 2));
-    X.push(p5.Vector.lerp(points[i], points[next(i, 3)], 1 - cross));
-    cross_points.push(X);
-  }
+  const midpoints = [];
+  const intersections = [];
 
   push();
   translate(x, y);
   rotate(rot);
-  fill(240);
-
-  beginShape();
-  for (let p of points) {
-    // helper_point(p, "blue");
-    vertex(p.x, p.y);
-  }
-  endShape(CLOSE);
 
   for (let i = 0; i < 3; i++) {
+    points.push(p5.Vector.fromAngle(i * (TAU / 3)).setMag(rad));
+  }
+
+  for (let i = 0; i < 3; i++) {
+    midpoints.push(p5.Vector.lerp(points[i], points[next(i, 3)], 0.5));
+    intersections.push(p5.Vector.lerp(midpoints[i], center, inner_ratio));
+  }
+
+  for (let i = 0; i < 3; i++) {
+    line(points[i].x, points[i].y, points[next(i, 3)].x, points[next(i, 3)].y);
+    line(points[i].x, points[i].y, intersections[i].x, intersections[i].y);
     line(
-      cross_points[i][0].x,
-      cross_points[i][0].y,
-      cross_points[prev(i, 3)][3].x,
-      cross_points[prev(i, 3)][3].y
+      points[next(i, 3)].x,
+      points[next(i, 3)].y,
+      intersections[i].x,
+      intersections[i].y
     );
     line(
-      cross_points[i][1].x,
-      cross_points[i][1].y,
-      cross_points[prev(i, 3)][2].x,
-      cross_points[prev(i, 3)][2].y
+      intersections[i].x,
+      intersections[i].y,
+      intersections[next(i, 3)].x,
+      intersections[next(i, 3)].y
     );
-    line(inner_points[i].x, inner_points[i].y, 0, 0);
   }
 
   pop();
